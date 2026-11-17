@@ -3,41 +3,61 @@
 entity USER{
 *id_user : UNIQUE <<key>>
 *name : STRING
-*phone:INTEGER
+*phone: STRING
+*ktp : UNIQUE
+*SIM : UNIQUE
 }
 
 entity CAR{
 *id_car : UNIQUE <<key>>
 *brand : STRING
-
+nomor_plat : STRING
 
 }
 
-entity RENTAL{
-*id_rental : UNIQUE <<key>>
-*id_user : INTEGER <<foreign key>>
-*id_car : INTEGER <<foreign key>>
+entity SOPIR{
+*id_sopir : UNIQUE <<key>>
+*name : STRING
+
 }
 
-entity ORDER{
-*id_order : UNIQUE <<key>>
+entity SEWA{
+*id_sewa : UNIQUE <<key>>
 }
 
-
-entity PAYMENT{
-*id_payment : UNIQUE <<key>>
-}
-
-entity start_location{
-*id_start_location : UNIQUE <<key>>
-}
-
-entity end_location{
-*id_end_location : UNIQUE <<key>>
+entity DETAIL_SEWA{
+*id_detail_sewa : UNIQUE <<key>>
+waktu_mulai : DATE
+waktu_selesai : DATE
+jumlah_unit_sewa : INTEGER
 }
 
 
+entity PEMBAYARAN{
+*id_pembayaran : UNIQUE <<key>>
+waktu_pembayaran : DATE
+}
 
+
+entity PENGEMBALIAN{
+*id_pengembalian : UNIQUE <<key>>
+*waktu_pengembalian : DATE
+}
+
+entity DENDA{
+*id_denda : UNIQUE <<key>>
+jenis_denda : STRING
+}
+
+
+
+SEWA ||--o|SOPIR : "sewa bisa menggunakan sopir bisa juga tidak"
+SEWA ||--o|DETAIL_SEWA : "sewa bisa memiliki banyak detail sewa"
+DETAIL_SEWA ||--o|CAR : "detail sewa bisa menyewa banyak mobil"
+DETAIL_SEWA ||--o|PEMBAYARAN : "detail sewa bisa memiliki pembayaran"
+DETAIL_SEWA ||--o|PENGEMBALIAN : "detail sewa bisa memiliki pengembalian"
+DETAIL_SEWA ||--o|DENDA : "detail sewa bisa memiliki denda"
+USER ||--o|SEWA : "user bisa melakukan banyak sewa"
 
 
 @enduml
