@@ -1,0 +1,7 @@
+@startuml arch-db-rental
+
+entity USER{
+*id_user : UNIQUE <<key>>
+
+
+@enduml
