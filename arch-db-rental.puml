@@ -2,6 +2,42 @@
 
 entity USER{
 *id_user : UNIQUE <<key>>
+*name : STRING
+*phone:INTEGER
+}
+
+entity CAR{
+*id_car : UNIQUE <<key>>
+*brand : STRING
+
+
+}
+
+entity RENTAL{
+*id_rental : UNIQUE <<key>>
+*id_user : INTEGER <<foreign key>>
+*id_car : INTEGER <<foreign key>>
+}
+
+entity ORDER{
+*id_order : UNIQUE <<key>>
+}
+
+
+entity PAYMENT{
+*id_payment : UNIQUE <<key>>
+}
+
+entity start_location{
+*id_start_location : UNIQUE <<key>>
+}
+
+entity end_location{
+*id_end_location : UNIQUE <<key>>
+}
+
+
+
 
 
 @enduml
