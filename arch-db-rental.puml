@@ -53,7 +53,7 @@ jenis_denda : STRING
 
 SEWA ||--o|SOPIR : "sewa bisa menggunakan sopir bisa juga tidak"
 SEWA ||--o|DETAIL_SEWA : "sewa bisa memiliki banyak detail sewa"
-DETAIL_SEWA ||--o|CAR : "detail sewa bisa menyewa banyak mobil"
+DETAIL_SEWA ||--|{CAR : "detail sewa bisa menyewa banyak mobil"
 DETAIL_SEWA ||--o|PEMBAYARAN : "detail sewa bisa memiliki pembayaran"
 DETAIL_SEWA ||--o|PENGEMBALIAN : "detail sewa bisa memiliki pengembalian"
 DETAIL_SEWA ||--o|DENDA : "detail sewa bisa memiliki denda"
