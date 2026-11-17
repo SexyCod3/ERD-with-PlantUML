@@ -1,0 +1,121 @@
+@startuml rancangan
+
+entity USER{
+*id_user : INTEGER <<key>>
+---
+username : UNIQUE
+email : UNIQUE
+password_hash : VARCHAR
+phone_number: VARCHAR
+}
+
+entity BUKU{
+*id_buku : INTEGER <<key>>
+---
+id_pengunggah : INTEGER <<FK>>
+---
+judul: VARCHAR
+tahun_terbit: YEAR
+}
+
+entity RAK_BUKU{
+    *id_rak : INTEGER <<key>>
+    ---
+    id_user : INTEGER <<FK>>
+    id_buku : INTEGER <<FK>>
+    tanggal_mulai : DATE
+    tanggal_kedaluwarsa: DATE
+}
+
+
+' entity PEMBELIAN_BUDGET{
+'     *id_pembelian : INTEGER <<key>>
+'     ---
+'     id_user : INTEGER <<FK>>
+'     nomor_pembayaran : VARCHAR
+'     metode_pembayaran : VARCHAR
+'     jumlah_rupiah : DECIMAL
+'     status : VARCHAR
+'     created_at : DATETIME
+' }
+
+entity PAKET_BUDGET{
+    *id_paket : INTEGER <<key>>
+    ---
+    nama_paket : VARCHAR
+    jumlah_rupiah : DECIMAL
+    jumlah_budget : DECIMAL
+    status : VARCHAR
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+entity PEMBELIAN_BUDGET{
+    *id_pembelian : INTEGER <<key>>
+    ---
+    id_user : INTEGER <<FK>>
+    id_paket : INTEGER <<FK>>
+    nomor_pembayaran : VARCHAR
+    metode_pembayaran : VARCHAR
+    jumlah_rupiah : DECIMAL
+    jumlah_budget : DECIMAL
+    status : VARCHAR
+    created_at : DATETIME
+    expires_at : DATETIME
+    paid_at : DATETIME
+}
+
+entity PEMBAYARAN_BUDGET{
+    *id_pembayaran : UNIQUE <<key>>
+    ---
+    id_pembelian : INTEGER <<FK>>
+    nomor_pembayaran : VARCHAR
+    provider_pembayaran : VARCHAR
+    external_reverence : VARCHAR
+    metode_pembayaran : VARCHAR
+    jumlah_rupiah : DECIMAL
+    status : VARCHAR
+    created_at : DATETIME
+}
+
+entity TRANSAKSI_BUDGET{
+    *id_transaksi : INTEGER <<key>>
+    ---
+    id_user : INTEGER <<FK>>
+    jenis_transaksi : VARCHAR
+    jumlah : DECIMAL
+    referensi_id : INTEGER
+    keterangan : VARCHAR
+    created_at : DATE
+}
+
+entity AKTIVITAS_MEMBACA{
+    *id_aktivitas : INTEGER <<key>>
+    ---
+    id_user : INTEGER <<FK>>
+    id_buku : INTEGER <<FK>>
+    durasi : INTEGER
+    progres : DECIMAL
+    created_at : DATETIME
+}
+
+entity PENARIKAN_DANA{
+    *id_penarikan : INTEGER <<key>>
+    ---
+    id_user : INTEGER <<FK>>
+    jumlah : DECIMAL
+    status : VARCHAR
+    created_at : DATETIME
+}
+USER ||--o{ BUKU : mengunggah
+USER ||--o{RAK_BUKU : menyimpan
+BUKU ||--o{ RAK_BUKU : berisi
+USER ||--o{TRANSAKSI_BUDGET : melakukan
+USER ||--o{PEMBELIAN_BUDGET : melakukan
+PAKET_BUDGET ||--o{PEMBELIAN_BUDGET : dibeli
+PEMBELIAN_BUDGET ||--o{PEMBAYARAN_BUDGET : memiliki
+PEMBAYARAN_BUDGET ||--o{TRANSAKSI_BUDGET : menghasilkan
+USER ||--o{AKTIVITAS_MEMBACA : melakukan
+BUKU ||--o{AKTIVITAS_MEMBACA : membaca
+USER ||--o{PENARIKAN_DANA : melakukan
+@enduml
